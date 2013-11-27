@@ -1,11 +1,9 @@
 {
     "dependencies": {
-
         "mockery" : "*",
 	    "jscoverage" : "*",
         "temp" : "*",
         "funcster" : "*",
         "q-io" : "*"
-
     }
 }
