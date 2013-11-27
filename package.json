@@ -6,6 +6,7 @@
 	    "jscoverage" : "*",
         "temp" : "*",
         "funcster" : "*",
-        "q-io" : "*"
+        "q-io" : "*",
+        "node-uuid" : "*"
     }
 }
