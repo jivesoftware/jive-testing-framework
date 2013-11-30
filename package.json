@@ -3,10 +3,14 @@
     "version": "0.0.1",
     "dependencies": {
         "mockery" : "*",
-	    "jscoverage" : "*",
+        "express" : "*",
+        "mocha" : "*",
+        "jscoverage" : "*",
         "temp" : "*",
         "funcster" : "*",
         "q-io" : "*",
-        "node-uuid" : "*"
+        "node-uuid" : "*",
+        "q" : "*",
+        "path" : "*"
     }
 }

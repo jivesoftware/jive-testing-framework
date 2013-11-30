@@ -37,6 +37,11 @@ exports.onTestFail = function(test) {
 };
 
 exports.onTestStart = function(test) {
+    // overridden
+};
+
+exports.onTestEnd = function(test) {
+    // overridden
 };
 
 exports.setupSuite = function(test) {
@@ -106,11 +111,13 @@ exports.runTests = function(options) {
 
         runner.on('pass', function (test) {
             that.onTestPass(test);
+            that.onTestEnd(test);
         });
 
         runner.on('fail', function (test) {
             that.allClear = false;
             that.onTestFail(test);
+            that.onTestEnd(test);
         });
 
     });

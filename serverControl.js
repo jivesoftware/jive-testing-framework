@@ -28,8 +28,9 @@ exports.start = function(config, procOptions) {
         procOptions = {};
     }
     procOptions.execArgv = [];
+    var g =  process.cwd() + '/node_modules/jive-testing-framework/serverProcessDriver';
 
-    serverProcess = require('child_process').fork('./util/serverProcessDriver',  procOptions);
+    serverProcess = require('child_process').fork(g,  procOptions);
     var serverStartedCallback = function(m) {
 
         serverProcess.removeListener('message', arguments.callee);
