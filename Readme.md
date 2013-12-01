@@ -1,9 +1,9 @@
-# NodeJS Functional and Unit Testing just got fun
+## Summary
 
 Testing nodeJS applications -- for example, those written ontop of the Jive SDK -- has become easier than ever, using the jive testing framework (https://github.com/jivesoftware/jive-testing-framework). The framework:
 is a convenient wrapper for the excellent Mocha library, and enables you to inject useful framework and custom utilities into the testing context.
 includes a super useful "server simulator" that you can instantiate and control from within your testing context. Yep, you can dynamically spawn servers up, program their intended responses, and even ship *code* to these servers to further customize their behavior. This makes the framework especially useful for testing applications that need to mock the interaction of external systems (eg. Jive, salesforce, or whatever).
-is a test coverage measurer/visualizing tool. Stay tuned on how to do this in a future post from me.
+is a test coverage measurer/visualizing tool. Stay tuned on how to do this in the near future.
  
 ## Including the framework
 To begin testing your application, make sure you include the testing framework in your package.json:
@@ -19,7 +19,7 @@ To begin testing your application, make sure you include the testing framework i
 }
 ```
 
-The framework is not yet published to NPM, so it must be pulled down by nodes directly from the public github repository, stay tuned for nom packaging.
+The framework is not yet published to NPM, so it must be pulled down by nodes directly from the public github repository.
  
 ## Setting up your test runner
 Next you have to create a runner. I've called my example one run.js, and it should be executable by node (eg. node run.js should work).
