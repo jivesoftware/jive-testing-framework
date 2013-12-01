@@ -8,21 +8,24 @@ is a test coverage measurer/visualizing tool. Stay tuned on how to do this in a 
 ## Including the framework
 To begin testing your application, make sure you include the testing framework in your package.json:
  
-`{
+`
+{
     …  
     "dependencies": {  
         …  
         "jive-testing-framework" : "git+ssh://git@github.com/jivesoftware/jive-testing-framework.git",  
         …  
     }  
-}`
+}
+`
 
 The framework is not yet published to NPM, so it must be pulled down by nodes directly from the public github repository, stay tuned for nom packaging.
  
 ## Setting up your test runner
 Next you have to create a runner. I've called my example one run.js, and it should be executable by node (eg. node run.js should work).
  
-`var testUtils = require('jive-testing-framework/testUtils');
+`
+var testUtils = require('jive-testing-framework/testUtils');
 var jive = require('jive-sdk');  
 var jiveMongo = require('../');  
   
@@ -63,7 +66,8 @@ makeRunner().runTests(
     } else {  
         process.exit(-1);  
     }  
-});`
+});
+`
  
 In this simple runner, I've created a makeRunner function that extends the base test runner in the framework (jive-testing-framework/baseSuite). The base suite runner has extension points which your particular instance can override. In my example, on the start of every test I inject into the test context an instance of mongodb client. I can inject anything I want into the context, and it will be available from within the test as this['<NAME OF MY RESOURCE>']. Then on each test teardown, I destroy the mongodb client. The .getParentSuiteName() function is overridden in my runner to indicate that tests of suite 'jive' and its children should be executed.
  
@@ -74,19 +78,22 @@ The 'test cases' parameter to runTests() is the location of the testcase library
 ## Setting up the testcase library
 In your project, set up a testcase folder hierarchy. Its root should be equal to the ''testcases' parameter of context attribute fed to runTests. Here is what mine looks like:
  
-`\projectroot
+`
+\projectroot
        \test  
             \library  
                  \mongo  
                       \testcases  
                  \othermonogotests  
-                      \testcases`
+                      \testcases
+`
 
 The test runner will recursively execute any Mocha tests found in the \testcases folders inside your library root.
  
 Here is one such file, called tests.js, located under \library\mongo\testcases\tests.js:
  
-`var assert = require('assert');
+`
+var assert = require('assert');
 var test = require('../basePersistenceTest');  
   
 describe('jive', function () {  
@@ -112,14 +119,16 @@ describe('jive', function () {
                     return persistence.close();  
                 });  
         })  
-});`
+});
+`
 
 In this example, I pull out the jive, persistence, and testUtils resources injected into the test context, then provide them as parameters into a custom testing utility called 'basePersistenceTest' that exists in a folder just above the one housing my currently executing test. Note that I could have also just used those resources inline in my test.
  
 ## Simulating a remote server
 Here is a fun example of simulating Jive, and controlling what it will return.
  
-`var assert = require('assert');
+`
+var assert = require('assert');
   
 describe('jive', function () {  
   
@@ -185,7 +194,8 @@ describe('jive', function () {
             });  
      });  
   
-});`
+});
+`
  
 ## More fun things you can do
 As part of your run.js you can inject some of the other amazingly useful utilities such as mockery and simon, for noninvasive mocks of whole libraries and individual functions. But hopefully what I have presented here will make unit and functional testing easier for nodeJS apps.
