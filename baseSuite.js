@@ -91,6 +91,14 @@ exports.runTests = function(options) {
 
         runner.on('suite', function (test) {
             if ( test['title'] == that.getParentSuiteName() ) {
+                if ( that.context ) {
+                    for ( var key in exports.context ) {
+                        if ( exports.context.hasOwnProperty(key) ) {
+                            var value = exports.context[key];
+                            test['ctx'][key] = value;
+                        }
+                    }
+                }
                 that.setupSuite( test['ctx']);
             }
         });
