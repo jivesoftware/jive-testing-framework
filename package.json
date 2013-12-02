@@ -1,16 +1,37 @@
-{ 
-    "name" : "jive-testing-framework",
-    "version": "0.0.1",
-    "dependencies": {
-        "mockery" : "1.4.0",
-        "express": "3.1.0",
-        "mocha" : "1.14.0",
-        "jscoverage" : "0.3.8",
-        "temp" : "0.6.0",
-        "funcster" : "0.0.3",
-        "q" : "0.9.7",
-        "node-uuid" : "1.4.1",
-        "q-io" : "1.10.6",
-        "path" : "0.4.9"
-    }
+{
+  "name": "jive-testing-framework",
+  "version": "0.0.2",
+  "dependencies": {
+    "mockery": "1.4.0",
+    "express": "3.1.0",
+    "mocha": "1.14.0",
+    "jscoverage": "0.3.8",
+    "temp": "0.6.0",
+    "funcster": "0.0.3",
+    "q": "0.9.7",
+    "node-uuid": "1.4.1",
+    "q-io": "1.10.6",
+    "path": "0.4.9"
+  },
+  "description": "For testing nodejs applications",
+   "main": "testUtils.js",
+  "devDependencies": {
+    "mocha": "~1.14.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jivesoftware/jive-testing-framework.git"
+  },
+  "keywords": [
+    "jive",
+    "test"
+  ],
+  "author": "Jive Software",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jivesoftware/jive-testing-framework/issues"
+  }
 }

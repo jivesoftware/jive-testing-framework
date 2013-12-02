@@ -67,12 +67,10 @@ exports.runTests = function(options) {
         timeout: options['timeout'] || 10000
     };
 
-    var suppressMessages;
     if ( options['runMode'] == 'coverage' ) {
         mochaOptions['reporter'] = 'html-cov';
-        suppressMessages = true;
     } else {
-        mochaOptions['reporter'] = 'list';
+        mochaOptions['reporter'] = 'min';
     }
 
     var mocha = new Mocha(mochaOptions);
