@@ -218,3 +218,19 @@ exports.fswrite = function (data, path) {
     });
     return deferred.promise;
 };
+
+exports.makeRunner = function( options ) {
+    options = options || {};
+    var runMode = options['runMode'] || 'test';
+    var eventHandlers = options['eventHandlers'] || {};
+
+    var runner = Object.create(require('./baseSuite'));
+    for ( var key in eventHandlers ) {
+        if ( eventHandlers.hasOwnProperty(key) ) {
+            var value = eventHandlers[key];
+            runner[key] = value;
+        }
+    }
+
+    return runner;
+};

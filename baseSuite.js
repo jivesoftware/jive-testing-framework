@@ -59,6 +59,7 @@ exports.runTests = function(options) {
     var deferred = q.defer();
 
     exports.context = options['context'];
+    var suiteName = options['rootSuiteName'];
 
     var mochaOptions = {
         reporter: 'dot',
@@ -90,7 +91,7 @@ exports.runTests = function(options) {
         });
 
         runner.on('suite', function (test) {
-            if ( test['title'] == that.getParentSuiteName() ) {
+            if ( test['title'] == suiteName) {
                 if ( that.context ) {
                     for ( var key in exports.context ) {
                         if ( exports.context.hasOwnProperty(key) ) {
@@ -104,7 +105,7 @@ exports.runTests = function(options) {
         });
 
         runner.on('suite end', function (test) {
-            if ( test['title'] == that.getParentSuiteName() ) {
+            if ( test['title'] == suiteName) {
                 that.teardownSuite(test);
             }
         });
