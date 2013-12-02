@@ -23,58 +23,54 @@ The framework is not yet published to NPM, so it must be pulled down by nodes di
  
 ## Setting up your test runner
 Next you have to create a runner. I've called my example one run.js, and it should be executable by node (eg. node run.js should work).
- 
+
 ```
 var testUtils = require('jive-testing-framework/testUtils');
-var jive = require('jive-sdk');  
-var jiveMongo = require('../');  
-  
-var makeRunner = function() {  
-    var runner = Object.create(require('jive-testing-framework/baseSuite'));  
-  
-    runner.getParentSuiteName = function() {  
-        return 'jive';  
-    };  
-  
-    runner.onTestStart = function(test) {  
-        test['ctx']['persistence'] = new jiveMongo({  
-            'databaseUrl' : 'mongodb://localhost:27017/mongoTestDB'  
-        });;  
-    };  
-  
-    runner.onTestEnd = function(test) {  
-        test['ctx']['persistence'].destroy();  
-    };  
-  
-    return runner;  
-};  
-  
-makeRunner().runTests(  
-    {  
-        'context' : {  
-            'testUtils' : testUtils,  
-            'jive' : jive,  
-            'jiveMongo' : jiveMongo  
-        },  
-        'runMode' : 'test',  
-        'testcases' : process.cwd()  + '/library',  
-        'timeout' : 5000  
-    }  
-).then( function(allClear) {  
-    if ( allClear ) {  
-        process.exit(0);  
-    } else {  
-        process.exit(-1);  
-    }  
+var jive = require('jive-sdk');
+var jiveMongo = require('../');
+
+
+var makeRunner = function() {
+    return testUtils.makeRunner( {
+        'eventHandlers' : {
+            'onTestStart' : function(test) {
+                test['ctx']['persistence'] = new jiveMongo({
+                    'databaseUrl' : 'mongoTestDB'
+                });
+            },
+            'onTestEnd' : function(test) {
+                test['ctx']['persistence'].destroy();
+            }
+        }
+    });
+};
+
+makeRunner().runTests(
+    {
+        'context' : {
+            'testUtils' : testUtils,
+            'jive' : jive,
+            'jiveMongo' : jiveMongo
+        },
+        'rootSuiteName' : 'jive',
+        'runMode' : 'test',
+        'testcases' : process.cwd()  + '/library',
+        'timeout' : 5000
+    }
+).then( function(allClear) {
+    if ( allClear ) {
+        process.exit(0);
+    } else {
+        process.exit(-1);
+    }
 });
 ```
- 
-In this simple runner, I've created a makeRunner function that extends the base test runner in the framework (jive-testing-framework/baseSuite). The base suite runner has extension points which your particular instance can override. In my example, on the start of every test I inject into the test context an instance of mongodb client. I can inject anything I want into the context, and it will be available from within the test as this['<NAME OF MY RESOURCE>']. Then on each test teardown, I destroy the mongodb client. The .getParentSuiteName() function is overridden in my runner to indicate that tests of suite 'jive' and its children should be executed.
- 
+
+In this simple runner, I've created a makeRunner function that creates a test runner by invoking the makeRunner function from the framework testUtils library, specifying test life cycle event handler overrides (the base suite has no-ops).  In my example, on the start of every test I inject into the test context an instance of mongodb client. I can inject anything I want into the context, and it will be available from within the test as this['<NAME OF MY RESOURCE>']. Then on each test teardown, I destroy the mongodb client.
+
 Any resources that should always be present will be injected into the testing context via the 'context' parameter to runTests. In my example, I injected an instance of the framework testUtils, the jive-sdk, and the jive mongo driver into the context.
- 
-The 'test cases' parameter to runTests() is the location of the testcase library, described below. The 'timeout' parameter controls how much time Mocha should give to an individual test before that test is counted as failed. The 'runMode' parameter determines whether or not we are running the testing framework in test mode, or in coverage mode.
- 
+
+The 'test cases' parameter to runTests() is the location of the testcase library, described below, and the 'rootSuiteName' describes which suite within that library (and any subsuites) should be run. The 'timeout' parameter controls how much time Mocha should give to an individual test before that test is counted as failed. The 'runMode' parameter determines whether or not we are running the testing framework in test mode, or in coverage mode.
 ## Setting up the testcase library
 In your project, set up a testcase folder hierarchy. Its root should be equal to the ''testcases' parameter of context attribute fed to runTests. Here is what mine looks like:
  
