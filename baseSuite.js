@@ -61,15 +61,13 @@ exports.runTests = function(options) {
     var suiteName = options['rootSuiteName'];
 
     var mochaOptions = {
-        reporter: 'dot',
+        reporter: options['reporter'] || 'min',
         ui: 'bdd',
         timeout: options['timeout'] || 10000
     };
 
     if ( options['runMode'] == 'coverage' ) {
         mochaOptions['reporter'] = 'html-cov';
-    } else {
-        mochaOptions['reporter'] = 'min';
     }
 
     var mocha = new Mocha(mochaOptions);
