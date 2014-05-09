@@ -52,7 +52,6 @@ exports.teardownSuite = function(test) {
     // overridden
 };
 
-exports.allClear = true;
 exports.context = {};
 
 exports.runTests = function(options) {
@@ -88,6 +87,8 @@ exports.runTests = function(options) {
             that.beforeTest();
         });
 
+        var allClear = true;
+
         runner.on('suite', function (test) {
             if ( test['title'] == suiteName) {
                 if ( that.context ) {
@@ -109,7 +110,7 @@ exports.runTests = function(options) {
         });
 
         runner.on('end', function (test) {
-            deferred.resolve(exports.allClear);
+            deferred.resolve(allClear);
         });
 
         runner.on('test', function (test) {
@@ -122,7 +123,7 @@ exports.runTests = function(options) {
         });
 
         runner.on('fail', function (test) {
-            that.allClear = false;
+            allClear = false;
             that.onTestFail(test);
             that.onTestEnd(test);
         });
