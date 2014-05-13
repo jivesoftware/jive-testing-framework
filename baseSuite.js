@@ -66,10 +66,6 @@ exports.runTests = function(options) {
         timeout: options['timeout'] || 10000
     };
 
-    if ( options['runMode'] == 'coverage' ) {
-        mochaOptions['reporter'] = 'html-cov';
-    }
-
     var mocha = new Mocha(mochaOptions);
     var that = this;
     var testDir = options['testcases'] || exports.getTestDir();
