@@ -4,7 +4,7 @@
   "dependencies": {
     "mockery": "1.4.0",
     "express": "3.1.0",
-    "mocha": "1.14.0",
+    "mocha": "1.18.0",
     "jscoverage": "0.3.8",
     "temp": "0.6.0",
     "funcster": "0.0.3",
@@ -16,7 +16,7 @@
   "description": "For testing nodejs applications",
    "main": "testUtils.js",
   "devDependencies": {
-    "mocha": "~1.14.0"
+    "mocha": "~1.18.0"
   },
   "scripts": {
     "test": "mocha"
