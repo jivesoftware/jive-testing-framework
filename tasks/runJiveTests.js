@@ -11,16 +11,25 @@ module.exports = function(grunt) {
             'testcases': process.cwd()  + '/test',
             'timeout': 5000,
             'eventHandlers': {},
-            'context': {
-                'testUtils' : testUtils,
-                'jive' : require(process.cwd()+'/node_modules/jive-sdk') // Default to whatever jive-sdk is being used by the caller
+            'context': function() { // This is a function to prevent grunt from pre-processing the contents
+                return {};
             }
         });
+
+        var context = options.context();
+
+        if (!context.hasOwnProperty('testUtils')) {
+            context.testUtils = testUtils;
+        }
+
+        if (!context.hasOwnProperty('jive')) {
+            context.jive = require(process.cwd()+'/node_modules/jive-sdk'); // Default to whatever jive-sdk is being used by the caller;
+        }
 
         testUtils.makeRunner({
             'eventHandlers': options.eventHandlers
         }).runTests({
-            'context' : options.context,
+            'context' : context,
             'reporter': options.reporter,
             'rootSuiteName' : options.rootSuiteName,
             'testcases' : options.testcases,
